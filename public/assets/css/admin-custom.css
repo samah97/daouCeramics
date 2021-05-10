@@ -1,0 +1,6 @@
+a.remove-multi-image{
+    color:#ff0000;
+}
+a.remove-multi-image:before{
+    font-size: 25px;
+}
