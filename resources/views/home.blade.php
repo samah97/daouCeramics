@@ -1,4 +1,4 @@
-{{--<!DOCTYPE html>
+title{{--<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -91,11 +91,12 @@
 
     </div>
 </div>
+@if($category)
 <!-- banner section end -->
 <!-- protect section start -->
 <div class="section-2 row">
     <div class="col-lg-4 col-sm-6 padding-0">
-        <img src="{{asset('assets/images/img4.jpg')}}">
+        <img onerror="onImageError(this);" src="{{asset('storage/'.$category->thumbnail)}}">
     </div>
     <div class="col-lg-8 col-sm-6 box padding-0">
         <div class="text_box">
@@ -103,11 +104,12 @@
             <div>STAY COOL WITH OUR VAST COLLECTION OF PITCHERS  </div>
         </div>
         <div class="btn_box">
-            <button>TO OUR PITCHERS</button>
+            <a href=""></a> <button>{{__('titles.to_our')}} {{$category->title}}</button>
         </div>
 
     </div>
 </div>
+@endif
 <!-- protect section end -->
 <!-- about section start -->
 

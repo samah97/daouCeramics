@@ -9,6 +9,7 @@
     <title>{{config('app.name','Daou Ceramics')}}</title>
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+
     <!-- Responsive-->
     {{--<link rel="stylesheet" href="css/responsive.css">--}}
     <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
@@ -21,9 +22,13 @@
     <!-- owl stylesheets -->
     <link rel="stylesheet" href="{{asset('assets/css/owl.carousel.min.css')}}">
     {{--<link rel="stylesheet" href="{{asset('assets/css/owl.theme.default.min.css')}}">--}}
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <link rel="stylesheet" href="{{asset('assets/css/main_styles.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}"/>
+    @if(session()->get('locale') == 'ar')
+        <link rel="stylesheet" href="{{asset('assets/css/style_ar.css')}}">
+    @endif
     <!--Plugin CSS-->
     {{--<link rel="stylesheet" href="{{asset('css/app.css')}}"/>--}}
 
@@ -35,6 +40,9 @@
 
     <div id="app">
         <p id="ASSETS_PATH" path="{{asset('')}}" class="d-none"></p>
+        <p id="APP_URL" val="{{config('app.url')}}" class="d-none"></p>
+        <p id="xdebugPort" val="{{$xdebugPort}}" class="d-none"></p>
+
         @include('includes.loader')
         @include('sweetalert::alert')
         <div class="header_section">

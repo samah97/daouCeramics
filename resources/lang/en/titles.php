@@ -60,4 +60,9 @@ return [
     'address_recipient'=>'Address Of Recipient',
     'done'=>'Done',
     'payment'=>'Payment',
+    'your_cart'=>'Your Cart',
+    'cart_empty'=>'Your Cart is Empty',
+    'continue_shopping'=>'Continue Shopping',
+    'product_exist_cart'=>'Product already exist in cart and it will be updated',
+    'to_our'=>'To Our',
 ];

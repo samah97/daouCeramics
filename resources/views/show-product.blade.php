@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="btnback col-lg-12">
-        <a href="productlist.html" class="btnstyle" ><</a>
+        <a href="{{route('products')}}" class="btnstyle" ><</a>
     </div>
     <div class="containerimages-details">
         <div class="row">
@@ -35,21 +35,24 @@
                 @endif
             </div>
             <div class="col-lg-6 detailsorder">
+                @if($orderItem !=null)
+                <span class="text-danger">{{__('titles.product_exist_cart')}}</span>
+                @endif
                 <div class="t1">{{$product->title}}</div>
                 <div class="t2" id="priceElem" data-price="{{$product->price}}">€ {{$product->price}}</div>
-                <form method="POST" action="{{route('submit-product',['id'=>$product->product_id])}}">
+                <form method="POST" action="{{route('add-cart',['id'=>$product->product_id])}}">
                     @csrf
                     <div>
                         <div class="product-quantity">
                             <div class="pro-qty">
                                 <input type="button" value="+" id="inc1" onclick="incNumber1()"/>
 
-                                <input id="NumberId" class="circletext" name="quantity" type="text" readonly value="1" min="1" max="{{$product->quantity}}">
+                                <input id="NumberId" class="circletext" name="quantity" type="text" readonly value="{{$quantity}}" min="1" max="{{$product->quantity}}">
                                 <input type="button" value="-" id="dec1" onclick="decNumber1()"/>
                             </div>
                         </div>
                     </div>
-                    <div class="addtocartbox"><div class="addtocarttotal">Total:€ <span id="totalPrice">{{$product->price}}</span></div>
+                    <div class="addtocartbox"><div class="addtocarttotal">Total:€ <span id="totalPrice">{{$totalPrice}}</span></div>
                         <button type="submit">
                             <img class="icons" src="{{asset('assets/images/icon_navbar_shopping.png')}}">
                         </button>

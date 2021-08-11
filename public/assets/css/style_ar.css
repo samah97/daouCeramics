@@ -1,0 +1,12 @@
+.menu_text{
+    float:right;
+}
+.menu_text1,
+.menu_text1 ul,
+.lang-dropdown{
+    float:left;
+    text-align: left;
+}
+.lang-dropdown-menu .dropdown-item img{
+    float: right;
+}

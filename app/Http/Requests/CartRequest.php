@@ -25,8 +25,14 @@ class CartRequest extends FormRequest
      */
     public function rules()
     {
+        $productId = -1;
+        if($this->ajax()){
+            $productId = $this->input('product_id');
+        }else{
+            $productId = $this->id;
+        }
         $productRepository = App::make('App\Repositories\ProductRepository');
-        $product = $productRepository->getActiveById($this->id);
+        $product = $productRepository->getActiveById($productId);
         return [
             'quantity'=>'required|integer|min:1|max:'.$product->quantity,
         ];

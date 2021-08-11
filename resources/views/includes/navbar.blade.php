@@ -15,10 +15,16 @@
                                     </a>--}}
                                     @if(count($menuCollection->childCollections) > 0)
                                         <div class="dropdown">
-                                            <a href="javascript:;">
+                                            <a href="javascript:;" data-toggle="dropdown">
                                                 {{$menuCollection->title}}
+                                                <span class="caret"></span>
                                             </a>
-                                            <span class="caret"></span>
+                                            <ul class="dropdown-menu menu-item">
+                                                @foreach($menuCollection->childCollections as $childCollection)
+                                                    <li><a href="{{route('products',['collection'=>$childCollection->encrypted_id])}}">{{$childCollection->title}}</a> </li>
+                                                @endforeach
+
+                                            </ul>
                                         </div>
                                     @else
                                         <a href="{{route('products',['collection'=>$menuCollection->encrypted_id])}}">
@@ -59,43 +65,64 @@
             <ul>
                 <div class="togle_">
                 </div>
+                @if($showCart)
                 <div id="myCart" class="overlay" style="width: 0%">
                     <div> <a href="javascript:void(0)" class="closebtn" onclick="closeCart()">&times;</a></div>
                     <div class="overlay-content1">
                         <div class="menu-item1">
-                            <div class="dropdown">
+                            <p class="cartHeader">{{__('titles.your_cart')}}</p>
+{{--                            <div class="dropdown">
                                 <a href="index.html" class="navbtn dropdown-toggle" data-toggle="dropdown">
                                     Your Cart<span class="caret"></span></a>
-                            </div>
+                            </div>--}}
                         </div>
-                        <div class="cartwrapper">
-                            <div class="cartimg"><img src="{{asset('assets/images/order_img.jpg')}}"></div>
+
+                            @if(count($cartItems) > 0)
+                                {{--{{$total = 0}}--}}
+                            @foreach($cartItems as $cartItem)
+                                    {{--{{$total += $cartItem->price}}--}}
+                             <div class="cartwrapper">
+                            <div class="cartimg"><img onerror="onImageError(this);" src="{{asset('storage/'.$cartItem->product->thumbnail)}}"></div>
                             <div class="cartdetails">
-                                <div class="cartdetails1">Ceramic Pot</div>
-                                <div class="cartdetails2">
-                                    <div class="cartamount">€30,50</div>
+                                <div class="cartdetails1">{{$cartItem->product->title}}</div>
+                                <div class="cartdetails2 cart-item-{{$cartItem->product_id}}">
+                                    <div class="cartamount">€{{$cartItem->price}}</div>
                                     <div class="product-quantity">
                                         <div class="pro-qty">
-                                            <input type="button" value="+" id="inc" onclick="incNumber()"/>
-                                            <input class="circletext" type="text" value="1">
-                                            <input type="button" value="-" id="dec" onclick="decNumber()"/>
+                                            <input type="button" value="+" id="inc" onclick="updateCartItems({{$cartItem->product_id}},'i')"/>
+                                            <input class="circletext" type="text" value="{{$cartItem->quantity}}">
+                                            <input type="button" value="-" id="dec" onclick="updateCartItems({{$cartItem->product_id}},'d')"/>
                                         </div>
                                     </div>
                                 </div>
+                                <a href="javascript:deleteCartItem({{$cartItem->product_id}})" class="cartItemDelete">×</a>
                             </div>
-                        </div>
+                            </div>
+                            @endforeach
+                            @endif
+                            <div class="empty-cart @if(count($cartItems) > 0) d-none @endif" >
+                                <p>{{__('titles.cart_empty')}}</p>
+                                <button class="btn-shopping">
+                                    <a href="{{route('products')}}">{{__('titles.continue_shopping')}}</a>
+                                </button>
+                            </div>
                     </div>
-                    <div class="boxedBottom">
-                        <div class="carttotal">Total: €30,50</div>
-                        <a href="checkoutpayment.html"><img class="icons" src="{{asset('assets/images/icon_checkout.png')}}"></a>
+                    @if(count($cartItems) > 0)
+                    <div class="boxedBottom box-total">
+                        <div class="carttotal">Total: $ <span >{{$cartItems->sum('total_price')}}</span></div>
+                        <a href="{{route('payment')}}"><img class="icons" src="{{asset('assets/images/icon_checkout.png')}}"></a>
                     </div>
+                    @endif
                 </div>
-                <span onclick="toggleCart()"><img src="{{asset('assets/images/icon_navbar_shopping.png')}}" class="toggle_menu"></span>
+                <span onclick="toggleCart()"><img src="{{asset('assets/images/icon_navbar_shopping.png')}}" class="toggle_menu cartImg"></span>
                 <span onclick="toggleCart()"><img src="{{asset('assets/images/icon_navbar_shopping.png')}}" class="toggle_menu_1"></span>
+                @endif
+
+                @include('includes.language')
             </ul>
         </div>
         <div class="logo">
-            <div class="headbox titlelogo"><a href="{{route('home')}}">DAOU CERAMICS</a></div>
+            <div class="headbox titlelogo"><a href="{{route('home')}}">DAOU POTTERY</a></div>
             <div class="headbox icon-right">
 {{--                <a href="#" style="display: inline;float: left;width: 30px">
                     <img src="{{asset('assets/images/icon_navbar_shopping.png')}}">

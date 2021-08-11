@@ -30,4 +30,9 @@ class Product extends BaseModel
             //->where('characteristic_key',CommonValues::CHARACTERISTIC_AMENITIES);
         //return $this->belongsToMany(Category::class,'categories','category_id','product_id','p','','')
     }
+    public function collections(){
+        return $this->belongsToMany(Collection::class,ProductCollection::TableName(),Product::KeyName(),'collection_id', '','collection_id' );
+        //->where('characteristic_key',CommonValues::CHARACTERISTIC_AMENITIES);
+        //return $this->belongsToMany(Category::class,'categories','category_id','product_id','p','','')
+    }
 }

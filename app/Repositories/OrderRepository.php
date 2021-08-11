@@ -53,13 +53,16 @@ class OrderRepository extends BaseRepository
                 if($receipient->receipient_id){
                     $data['receipient_id'] = $receipient->receipient_id;
                 }
-
-                $data['status'] = CommonValues::STATUS_PDELIVERY;
-                $this->makeModel();
-                $order = $this->create($data);
-                $orderId = $order->order_id;
+                $orderId = $data['order_id'];
+                $orderRepository = $this->makeModel();
+                $order = $orderRepository->where('order_id',$orderId)->where('status',CommonValues::STATUS_CART)->get();
+                //$data['status'] = CommonValues::STATUS_PDELIVERY;
+                $order->status = CommonValues::STATUS_PDELIVERY;
+                $order->save();
+                //$order = $this->create($data);
             });
             DB::commit();
+            CustomLog::getInstance()->info("Payment processed successfully for order: ".$orderId);
             return $orderId;
         }catch (\Exception $exception){
             CustomLog::getInstance()->error("This was an error processing the payment: ".$exception->getMessage());
@@ -75,10 +78,9 @@ class OrderRepository extends BaseRepository
             $orderId = DB::transaction(function () use ($data,$orderId) {
                 if (array_key_exists('order_id', $data) && $data['order_id'] > 0) {
                     $orderId = $data['order_id'];
-                    $order = $this->where(
-                        ['order_id' => $orderId],
-                        ['status' => CommonValues::STATUS_CART]
-                    );
+                    $order = $this->makeModel();
+                    $order = $this->where('order_id',$orderId)->where('status',CommonValues::STATUS_CART)->get();
+
                 } else {
                     $data['status'] = CommonValues::STATUS_CART;
                     $data['tracking_nbr'] = $this->generateTrackingNbr();
@@ -86,17 +88,16 @@ class OrderRepository extends BaseRepository
                     $order = $this->create($data);
                     $orderId = $order->order_id;
                 }
+                $orderItem = $this->orderItemRepository->where('order_id' ,$orderId)->where('product_id',$data['product_id'])->get();
 
-                $orderItem = $this->orderItemRepository->where(
-                    ['order_id' => $orderId],
-                    ['product_id' => $data['product_id']],
-                    ['price' => $data['price']]
-                )->get();
                 if (count($orderItem) == 0 ) {
                     $this->orderItemRepository->create(['order_id' => $orderId, 'product_id' => $data['product_id'], 'price' => $data['price'], 'quantity' => $data['quantity']]);
+                    CustomLog::getInstance()->info("Added new order item to order: $orderId");
                 } else {
+                    $orderItem = $orderItem[0];
                     $orderItem->quantity = $data['quantity'];
                     $orderItem->save();
+                    CustomLog::getInstance()->info("Updated Order Item ($orderItem->order_id) in order: $orderId;;;;Set quantity to ".$data['quantity']);
                 }
                 return $orderId;
             });
@@ -108,4 +109,15 @@ class OrderRepository extends BaseRepository
         return $orderId;
     }
 
+    public function getOrderTotal($data){
+        $orderId = $data['order_id'];
+        $order = $this->makeModel();
+        $order = $this->where('order_id',$orderId)->get();
+        $orderItems = $this->orderItemRepository->where('order_id' ,$orderId)->get();
+        $total =  0;
+        foreach ($orderItems as $orderItem ){
+            $total += $orderItem->total_price;
+        }
+        return $total;
+    }
 }

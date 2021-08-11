@@ -271,7 +271,7 @@ div#myCart{
 .menu_text1
 {
     float: right;
-    max-width: 30px;
+    /*max-width: 30px;*/
     margin-right: 25px;
 }
 .cartimg img {
@@ -281,8 +281,25 @@ div#myCart{
     display:inline-block;
     vertical-align: top;
 }
-.cartwrapper{
+.cartwrapper, .empty-cart{
     padding: 10px 10px 5px 36px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+/*.cartwrapper p{
+    text-align: center;
+}*/
+.empty-cart .btn-shopping{
+    text-align: center;
+    background-color: #DDC4AC;
+    padding: 15px;
+    color: #000000;
+    border-radius: 5%;
+}
+.empty-cart .btn-shopping a{
+    color:#000;
+    font-size: 1rem;
 }
 .cartamount {
     margin: 5px 0px;
@@ -403,4 +420,7 @@ input#inc1, input#dec1 {
     height: 32px;
     margin-left: 10px;
 }
-
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+    .prev, .next,.text {font-size: 11px}
+}

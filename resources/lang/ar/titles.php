@@ -57,5 +57,10 @@ return [
     'done'=>'Done',
     'payment'=>'Payment',
     'payment_submitted_success'=>'Your process has been processed successfully. Thank you for using our services',
-    'payment_submitted_error'=>'There was an error processing the payment kindly try again later or contact us on: '.env('SUPPORT_MAIL')
+    'payment_submitted_error'=>'There was an error processing the payment kindly try again later or contact us on: '.env('SUPPORT_MAIL'),
+    'your_cart'=>'سلة التسوق',
+    'cart_empty'=>'سلة التسوق الخاصة بك فارغة',
+    'continue_shopping'=>'تسوق',
+    'product_exist_cart'=>'السلعة موجودة في سلة التسوق و سوف يتم تعديلها',
+    'to_our'=>'إلى',
 ];

@@ -10,6 +10,7 @@ class SecurityUtil
 {
     const ENCRYPTION_SALT = "سكيورتي_سالت";
     const CART_ENCRYPTION_SALT = "$!@EQA9.-#!CART_سكيورتي";
+    const ORDER_COOKIE_KEY = "daou_ceramics_oo";
 
     public static function encrypt($text)
     {

@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 /*Route::get('/', function () {
     return view('home');
 });*/
+/*Route::get( '/', function(){
+    return view('layout.coming-soon');
+});*/
 Route::get('/lang/{lang}', 'LocalizationController@index');
 Route::get('/','HomeController@index')->name('home');
 Route::get('/payment','PaymentController@index')->name('payment');
@@ -24,10 +27,13 @@ Route::get('/products','ProductController@index')->name('products');
 Route::get('/products/{id}','ProductController@show')->name('show-product')->where('id','[0-9]+');
 
 
-Route::post('/products/{id}','ProductController@submit')->name('submit-product')->where('id','[0-9]+');
+Route::post('/products/{id}','OrderController@submit')->name('add-cart')->where('id','[0-9]+');
 Route::post('/payment','PaymentController@submit')->name('payment-submit');
 Route::post('/newsletter','HomeController@newsletter')->name('newsletter');
-
+Route::post('/ajax/update-cart','AjaxController@updateCartItem');
+Route::delete('/ajax/delete-cart-item','AjaxController@deleteCartItem')->name('delete-cart-item');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+

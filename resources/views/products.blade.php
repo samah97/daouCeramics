@@ -41,6 +41,30 @@
         </div>
     </div>
 
+    @if($categoryFilter || $collectionFilter)
+        <div class="container filter-container">
+            <div class="row">
+            @if($categoryFilter)
+            <div class="col-1 col-filter">
+                <div class="filter-item">
+                    {{$categoryFilter->title}}
+                </div>
+                <a href="{{request()->fullUrlWithQuery(['rm'=>'c-'.$categoryFilter->encrypted_id])}}" class="removeFilterBtn">×</a>
+{{--                <a href="{{route('products',['rm'=>'c-'.$categoryFilter->encrypted_id])}}" class="removeFilterBtn">×</a>--}}
+            </div>
+            @endif
+            @if($collectionFilter)
+                <div class="col-1">
+                    <div class="filter-item">
+                        {{$collectionFilter->title}}
+                    </div>
+                    <a href="{{request()->fullUrlWithQuery(['rm'=>'co-'.$collectionFilter->encrypted_id])}}" class="removeFilterBtn">×</a>
+                    {{--<a href="{{route('products',['rm'=>'co-'.$collectionFilter->encrypted_id])}}" class="removeFilterBtn">×</a>--}}
+                </div>
+            @endif
+            </div>
+        </div>
+    @endif
     <div class="productlist-container" id="product-list">
         <div class="row">
             @foreach($products as $product)

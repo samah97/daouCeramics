@@ -150,19 +150,20 @@
                         <div class="col-lg-5 col-sm-6 ">
                             <div class="ordercontainer">
                                 <div class="orderdetails"><h4>{{__('titles.your_order')}}</h4>
-
                                     <div class="orderdesc">
-
-                                        <div class="orderwrapper"><img src="{{asset('assets/images/order_img.jpg')}}"></div>
-                                        <div class="orderwrapper">
-                                            <div class="orderwrapperdetails1">1x Ceramic Pot</div>
-                                            <div class="orderwrapperdetails2">€30,50</div>
+                                    @foreach($orderItems as $orderItem)
+                                        <div class="orderItem">
+                                            <div class="orderwrapper"><img onerror="onImageError(this);" src="{{asset('storage/'.$orderItem->product->thumbnail)}}"></div>
+                                            <div class="orderwrapper">
+                                                <div class="orderwrapperdetails1">{{$orderItem->quantity}}x {{$orderItem->product->title}}</div>
+                                                <div class="orderwrapperdetails2">€{{$orderItem->price}}</div>
+                                            </div>
                                         </div>
-
+                                    @endforeach
                                     </div>
                                 </div>
                                 <div class="ordertotal1">
-                                    <div class="ordertotaldetails">{{__('titles.total')}}: €30,50</div>
+                                    <div class="ordertotaldetails">{{__('titles.total')}}: ${{$orderItems->sum('total_price')}}</div>
                                     <button class="orderEditbtn pull-right" type="button">{{__('titles.edit_order')}}</button>
                                 </div>
                             </div>
@@ -213,21 +214,23 @@
                                 <div class="orderdetails"><h4>{{__('titles.your_order')}}</h4>
 
                                     <div class="orderdesc">
-
-                                        <div class="orderwrapper"><img src="{{asset('assets/images/order_img.jpg')}}"></div>
-                                        <div class="orderwrapper">
-                                            <div class="orderwrapperdetails1">1x Ceramic Pot</div>
-                                            <div class="orderwrapperdetails2">€30,50</div>
-                                        </div>
-
+                                        @foreach($orderItems as $orderItem)
+                                            <div class="orderItem">
+                                                <div class="orderwrapper"><img onerror="onImageError(this);" src="{{asset('storage/'.$orderItem->product->thumbnail)}}"></div>
+                                                <div class="orderwrapper">
+                                                    <div class="orderwrapperdetails1">{{$orderItem->quantity}}x {{$orderItem->product->title}}</div>
+                                                    <div class="orderwrapperdetails2">€{{$orderItem->price}}</div>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="Shipping">
-                                    <div class="Shippingdetails">{{__('titles.shipping')}} €8,00 </div>
+                                    <div class="Shippingdetails">{{__('titles.shipping')}} $8,00 </div>
 
                                 </div>
                                 <div class="ordertotal">
-                                    <div class="ordertotaldetails">{{__('titles.total')}}: €30,50</div>
+                                    <div class="ordertotaldetails">{{__('titles.total')}}: ${{$orderItems->sum('total_price')}}</div>
 
                                 </div>
                             </div>
@@ -284,13 +287,15 @@
                                 <div class="orderdetails"><h4>{{__('titles.your_order')}}</h4>
 
                                     <div class="orderdesc">
-
-                                        <div class="orderwrapper"><img src="{{asset('assets/images/order_img.jpg')}}"></div>
-                                        <div class="orderwrapper">
-                                            <div class="orderwrapperdetails1">1x Ceramic Pot</div>
-                                            <div class="orderwrapperdetails2">€30,50</div>
-                                        </div>
-
+                                        @foreach($orderItems as $orderItem)
+                                            <div class="orderItem">
+                                                <div class="orderwrapper"><img onerror="onImageError(this);" src="{{asset('storage/'.$orderItem->product->thumbnail)}}"></div>
+                                                <div class="orderwrapper">
+                                                    <div class="orderwrapperdetails1">{{$orderItem->quantity}}x {{$orderItem->product->title}}</div>
+                                                    <div class="orderwrapperdetails2">€{{$orderItem->price}}</div>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="Shipping">
@@ -298,7 +303,7 @@
 
                                 </div>
                                 <div class="ordertotal">
-                                    <div class="ordertotaldetails">{{__('titles.total')}}: €30,50</div>
+                                    <div class="ordertotaldetails">{{__('titles.total')}}: ${{$orderItems->sum('total_price')+8}}</div>
 
                                 </div>
                             </div>

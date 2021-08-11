@@ -233,3 +233,24 @@ body{
 .lang-dropdown::after{
     display: none;
 }
+
+#myNav .dropdown-menu{
+    width: 100%;
+    padding: 0px;
+}
+
+#myNav .dropdown-menu li{
+    border-bottom: 1px solid #6c757d;
+    padding: 10px;
+}
+#myNav .dropdown-menu li:last-child{
+    border-bottom: none;
+}
+.filter-item{
+    padding: 3px;
+    font-weight: bold;
+    border: 2px solid #ebebeb;
+    border-radius: 20px;
+    text-align: center;
+}
+

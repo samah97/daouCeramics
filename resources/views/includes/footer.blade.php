@@ -4,7 +4,7 @@
         <div class="footer_section_2">
             <div class="row">
                 <div class="col-lg-4 col-sm-6">
-                    <h2 class="useful_text">DAOU CERAMICS</h2>
+                    <h2 class="useful_text">DAOU POTTERY</h2>
                     <div class="footer_text1">
                         <a href="#">{{__('titles.contact')}}</a>
                     </div> </div>
